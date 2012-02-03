@@ -43,6 +43,10 @@ private:
     QPushButton *m_quitBtn;
 
     void setupComponents();
+
+private slots:
+    void doStart();
+    void doQuit();
 };
 
 #endif // MAINWINDOW_H

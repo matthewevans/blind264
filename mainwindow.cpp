@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // get a smart pointer to the __main__ module of the Python interpreter
     m_context = m_pqt->getMainModule();
+    m_context.evalFile("helloworld.py");
 
     // Initialize UI components
     setupComponents();
@@ -75,6 +76,7 @@ void MainWindow::setupComponents() {
 
     // First column
     m_grainySource = new QComboBox;
+    m_grainySource->addItems(QStringList() << "Yes" << "No");
     colOneLayout->addRow("Grainy Source:", m_grainySource);
 
     m_bframes = new QSpinBox;
@@ -106,15 +108,17 @@ void MainWindow::setupComponents() {
     m_aqstrengthEnd = new QSpinBox;
     colThreeLayout->addRow("aq-strength end:", m_aqstrengthEnd);
 
-    QGroupBox *customBox = new QGroupBox("Custom Parameters");
+    QGroupBox *customBox = new QGroupBox("Custom x264 Parameters");
     customBox->setLayout(customLayout);
 
     m_customField = new QLineEdit;
-    customLayout->addWidget(new QLabel("Custom x264 Parameters"));
     customLayout->addWidget(m_customField);
 
     m_startBtn = new QPushButton("&Start");
     m_quitBtn = new QPushButton("&Quit");
+
+    connect(m_startBtn, SIGNAL(clicked()), this, SLOT(doStart()));
+    connect(m_quitBtn, SIGNAL(clicked()), this, SLOT(doQuit()));
 
     QHBoxLayout *btns = new QHBoxLayout;
     btns->addWidget(m_quitBtn);
@@ -134,6 +138,14 @@ void MainWindow::setupComponents() {
     mainWidget->setLayout(mainLayout);
 
     this->setCentralWidget(mainWidget);
+}
+
+void MainWindow::doStart() {
+    // Run Python Script here~
+}
+
+void MainWindow::doQuit() {
+    qApp->exit();
 }
 
 MainWindow::~MainWindow()
