@@ -57,6 +57,8 @@ void MainWindow::setupComponents() {
     m_srcChooseBtn->setMaximumWidth(50);
     inputLayout->addRow(m_srcFile, m_srcChooseBtn);
 
+    inputLayout->addRow("Output", new QWidget());
+
     // Output file text box/button
     m_outFile = new QLineEdit;
     m_outFile->setMinimumWidth(500);
@@ -67,46 +69,68 @@ void MainWindow::setupComponents() {
     QHBoxLayout *colLayout = new QHBoxLayout;
     QFormLayout *colOneLayout = new QFormLayout;
     QFormLayout *colTwoLayout = new QFormLayout;
-    QFormLayout *colThreeLayout = new QFormLayout;
     QVBoxLayout *customLayout = new QVBoxLayout;
     QHBoxLayout *btnLayout = new QHBoxLayout;
     colLayout->addLayout(colOneLayout);
+    colLayout->addSpacing(50);
     colLayout->addLayout(colTwoLayout);
-    colLayout->addLayout(colThreeLayout);
 
     // First column
     m_grainySource = new QComboBox;
     m_grainySource->addItems(QStringList() << "Yes" << "No");
     colOneLayout->addRow("Grainy Source:", m_grainySource);
 
-    m_bframes = new QSpinBox;
-    colOneLayout->addRow("bframes:", m_bframes);
+    m_bframes = new QDoubleSpinBox;
+    m_bframes->setSingleStep(0.1);
+    colTwoLayout->addRow("bframes:", m_bframes);
 
-    m_psyrdStart = new QSpinBox;
-    colOneLayout->addRow("psy-rd start:", m_psyrdStart);
+    m_psyrdStart = new QDoubleSpinBox;
+    m_psyrdEnd = new QDoubleSpinBox;
 
-    m_psyrdEnd = new QSpinBox;
-    colOneLayout->addRow("psy-rd end:", m_psyrdEnd);
+    QHBoxLayout *psyrdLayout = new QHBoxLayout;
+    psyrdLayout->setAlignment(Qt::AlignLeft);
+    psyrdLayout->addWidget(m_psyrdStart);
+    psyrdLayout->addWidget(new QLabel("to"));
+    psyrdLayout->addWidget(m_psyrdEnd);
+
+    colOneLayout->addRow("psy-rd:", psyrdLayout);
 
     // Second column
-    m_crfStart = new QSpinBox;
-    colTwoLayout->addRow("crf start:", m_crfStart);
+    m_crfStart = new QDoubleSpinBox;
+    m_crfEnd = new QDoubleSpinBox;
 
-    m_crfEnd = new QSpinBox;
-    colTwoLayout->addRow("crf end:", m_crfEnd);
+    QHBoxLayout *crfLayout = new QHBoxLayout;
+    crfLayout->setAlignment(Qt::AlignLeft);
+    crfLayout->addWidget(m_crfStart);
+    crfLayout->addWidget(new QLabel("to"));
+    crfLayout->addWidget(m_crfEnd);
 
-    m_qcompStart = new QSpinBox;
-    colTwoLayout->addRow("qcomp start:", m_qcompStart);
+    QLabel *crfLabel = new QLabel("crf:");
+    crfLabel->setAlignment(Qt::AlignRight);
+    colTwoLayout->addRow(crfLabel, crfLayout);
 
-    m_qcompEnd = new QSpinBox;
-    colTwoLayout->addRow("qcomp end:", m_qcompEnd);
+    m_qcompStart = new QDoubleSpinBox;
+    m_qcompEnd = new QDoubleSpinBox;
+
+    QHBoxLayout *qcompLayout = new QHBoxLayout;
+    qcompLayout->setAlignment(Qt::AlignLeft);
+    qcompLayout->addWidget(m_qcompStart);
+    qcompLayout->addWidget(new QLabel("to"));
+    qcompLayout->addWidget(m_qcompEnd);
+
+    colOneLayout->addRow("qcomp:", qcompLayout);
 
     // Third Column
-    m_aqstrengthStart = new QSpinBox;
-    colThreeLayout->addRow("aq-strength start:", m_aqstrengthStart);
+    m_aqstrengthStart = new QDoubleSpinBox;
+    m_aqstrengthEnd = new QDoubleSpinBox;
 
-    m_aqstrengthEnd = new QSpinBox;
-    colThreeLayout->addRow("aq-strength end:", m_aqstrengthEnd);
+    QHBoxLayout *aqstrengthLayout = new QHBoxLayout;
+    aqstrengthLayout->setAlignment(Qt::AlignLeft);
+    aqstrengthLayout->addWidget(m_aqstrengthStart);
+    aqstrengthLayout->addWidget(new QLabel("to"));
+    aqstrengthLayout->addWidget(m_aqstrengthEnd);
+
+    colTwoLayout->addRow("aq-strength:", aqstrengthLayout);
 
     QGroupBox *customBox = new QGroupBox("Custom x264 Parameters");
     customBox->setLayout(customLayout);
@@ -130,8 +154,11 @@ void MainWindow::setupComponents() {
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(inputGroupBox);
+    mainLayout->addSpacing(20);
     mainLayout->addLayout(colLayout);
+    mainLayout->addSpacing(20);
     mainLayout->addWidget(customBox);
+    mainLayout->addSpacing(20);
     mainLayout->addLayout(btnLayout);
 
     QWidget *mainWidget = new QWidget;

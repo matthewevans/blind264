@@ -25,17 +25,17 @@ private:
     QPushButton *m_outChooseBtn;
 
     QComboBox *m_grainySource;
-    QSpinBox *m_bframes;
-    QSpinBox *m_psyrdStart;
-    QSpinBox *m_psyrdEnd;
+    QDoubleSpinBox *m_bframes;
+    QDoubleSpinBox *m_psyrdStart;
+    QDoubleSpinBox *m_psyrdEnd;
 
-    QSpinBox *m_crfStart;
-    QSpinBox *m_crfEnd;
-    QSpinBox *m_qcompStart;
-    QSpinBox *m_qcompEnd;
+    QDoubleSpinBox *m_crfStart;
+    QDoubleSpinBox *m_crfEnd;
+    QDoubleSpinBox *m_qcompStart;
+    QDoubleSpinBox *m_qcompEnd;
 
-    QSpinBox *m_aqstrengthStart;
-    QSpinBox *m_aqstrengthEnd;
+    QDoubleSpinBox *m_aqstrengthStart;
+    QDoubleSpinBox *m_aqstrengthEnd;
 
     QLineEdit *m_customField;
 
