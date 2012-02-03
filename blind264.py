@@ -3,7 +3,6 @@ ver = '0.6'
 
 import sys, os, subprocess, argparse, shlex, StringIO, time
 
-
 def floatrange(i,j,k):
     x = range(int(100*i),int(100*j),int(100*k))
     y = list([z/100.0 for z in x])
