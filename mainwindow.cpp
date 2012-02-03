@@ -52,18 +52,24 @@ void MainWindow::setupComponents() {
 
     // Source file text box/button
     m_srcFile = new QLineEdit;
+    m_srcFile->setReadOnly(true);
     m_srcFile->setMinimumWidth(500);
     m_srcChooseBtn = new QPushButton("...");
     m_srcChooseBtn->setMaximumWidth(50);
+    connect(m_srcChooseBtn, SIGNAL(clicked()), this, SLOT(chooseSrcFile()));
+
     inputLayout->addRow(m_srcFile, m_srcChooseBtn);
 
     inputLayout->addRow("Output", new QWidget());
 
     // Output file text box/button
     m_outFile = new QLineEdit;
+    m_outFile->setReadOnly(true);
     m_outFile->setMinimumWidth(500);
     m_outChooseBtn = new QPushButton("...");
     m_outChooseBtn->setMaximumWidth(50);
+    connect(m_outChooseBtn, SIGNAL(clicked()), this, SLOT(chooseOutFile()));
+
     inputLayout->addRow(m_outFile, m_outChooseBtn);
 
     QHBoxLayout *colLayout = new QHBoxLayout;
@@ -154,11 +160,8 @@ void MainWindow::setupComponents() {
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(inputGroupBox);
-    mainLayout->addSpacing(20);
     mainLayout->addLayout(colLayout);
-    mainLayout->addSpacing(20);
     mainLayout->addWidget(customBox);
-    mainLayout->addSpacing(20);
     mainLayout->addLayout(btnLayout);
 
     QWidget *mainWidget = new QWidget;
@@ -173,6 +176,24 @@ void MainWindow::doStart() {
 
 void MainWindow::doQuit() {
     qApp->exit();
+}
+
+void MainWindow::chooseSrcFile() {
+    QString srcFile = QFileDialog::getOpenFileName(0, "Open AVS File", QString(), "AVS Files (*.avs)");
+
+    if (srcFile.isEmpty())
+	return;
+
+    m_srcFile->setText(srcFile);
+}
+
+void MainWindow::chooseOutFile() {
+    QString outFile = QFileDialog::getSaveFileName(0, "Save MKV", QString(), "Matroska (*.mkv)");
+
+    if (outFile.isEmpty())
+	return;
+
+    m_outFile->setText(outFile);
 }
 
 MainWindow::~MainWindow()

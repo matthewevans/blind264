@@ -47,6 +47,9 @@ private:
 private slots:
     void doStart();
     void doQuit();
+
+    void chooseSrcFile();
+    void chooseOutFile();
 };
 
 #endif // MAINWINDOW_H
